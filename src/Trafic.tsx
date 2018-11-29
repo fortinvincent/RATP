@@ -1,6 +1,10 @@
 import * as React from 'react';
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries} from 'react-vis';
-
+import {
+  XYPlot,
+  XAxis,
+  YAxis,
+  VerticalBarSeries
+} from 'react-vis';
 
 import './App.css'
 
@@ -22,6 +26,7 @@ export class Trafic extends React.PureComponent<{}, IState> {
     }
   }
 
+  // function called before render to make requests on the external API
   public componentWillMount(): void {
     fetch('https://data.ratp.fr/api/v2/catalog/datasets/trafic-annuel-entrant-par-station-du-reseau-ferre-2017/exports/json').then(
       result => result.json().then(
@@ -37,20 +42,20 @@ export class Trafic extends React.PureComponent<{}, IState> {
   }
 
   public render(): JSX.Element {
+    const myData = this.state.stationTrafic.map(station => 
+      ({id: '00036', y: station.trafic, x: station.rang})
+    )
+
     return (
       <div>
         <XYPlot
-          width={300}
-          height={300}>
-          <HorizontalGridLines />
-          <LineSeries
-            data={[
-              {x: 1, y: 10},
-              {x: 2, y: 5},
-              {x: 3, y: 15}
-            ]}/>
+          margin={{left: 75}}
+          width={600}
+          height={600}
+        >
+          <VerticalBarSeries className="vertical-bar-series-example" data={myData} />
           <XAxis />
-          <YAxis />
+          <YAxis marginLeft={100}/>
         </XYPlot>
       </div>
     )
