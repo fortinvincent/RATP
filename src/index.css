@@ -3,3 +3,12 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.text-gras {
+  font-weight: 800
+}
+
+.text-rouge {
+  color: #FF0000
+}
+

@@ -1,7 +1,11 @@
 import * as React from 'react';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries} from 'react-vis';
+
+
+import './App.css'
 
 interface IState {
-  readonly stationTrafic?: IStationDetail[]
+  readonly stationTrafic: IStationDetail[]
 }
 
 interface IStationDetail {
@@ -14,7 +18,7 @@ export class Trafic extends React.PureComponent<{}, IState> {
   constructor(props: {}) {
     super(props)
     this.state = {
-      stationTrafic: undefined
+      stationTrafic: []
     }
   }
 
@@ -34,7 +38,21 @@ export class Trafic extends React.PureComponent<{}, IState> {
 
   public render(): JSX.Element {
     return (
-      <pre>{JSON.stringify(this.state.stationTrafic, null, 2)}</pre>
+      <div>
+        <XYPlot
+          width={300}
+          height={300}>
+          <HorizontalGridLines />
+          <LineSeries
+            data={[
+              {x: 1, y: 10},
+              {x: 2, y: 5},
+              {x: 3, y: 15}
+            ]}/>
+          <XAxis />
+          <YAxis />
+        </XYPlot>
+      </div>
     )
   }
 }
