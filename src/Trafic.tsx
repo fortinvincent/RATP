@@ -34,7 +34,7 @@ export class Trafic extends React.PureComponent<{}, IState> {
 
   public render(): JSX.Element {
     return (
-      <div>{JSON.stringify(this.state.stationTrafic)}</div>
+      <pre>{JSON.stringify(this.state.stationTrafic, null, 2)}</pre>
     )
   }
 }
