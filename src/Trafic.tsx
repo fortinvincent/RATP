@@ -1,7 +1,8 @@
-import * as React from 'react';
+import * as React from 'react'
 import { CanvasJSChart } from './libs/canvasjs.react'
 
 import './App.css'
+import { XYPlot, VerticalBarSeries, XAxis, YAxis } from 'react-vis'
 
 interface IState {
   readonly stationTrafic: IStationDetail[]
@@ -52,6 +53,9 @@ export class Trafic extends React.PureComponent<{}, IState> {
       data: [{ type: "column", dataPoints: myData }]
     }
 
+    const myData2 = this.state.stationTrafic.map(station =>
+      ({id: '00036', y: station.trafic, x: station.rang })
+    )
 
     return (
       <div>
@@ -66,6 +70,24 @@ export class Trafic extends React.PureComponent<{}, IState> {
         <button onClick={() => this.setState({stationReseau: 'RER'}) }> RER </button>
         <button onClick={() => this.setState({stationReseau: 'Métro'}) }> Métro </button>
         <CanvasJSChart options={options}/>
+        <div className="title">
+          Graphique de frequentation des stations de metro parisien
+        </div>
+
+        <div>
+          <XYPlot
+            margin={{left: 75}}
+            width={1600}
+            height={600}
+          >
+            <VerticalBarSeries className="vertical-bar-series-example" data={myData2} />
+            <XAxis />
+            <YAxis marginLeft={100}/>
+          </XYPlot>
+        </div>
+        <div className="legende">
+          Source RATP 2017
+        </div>
       </div>
     )
   }
