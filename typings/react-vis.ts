@@ -299,7 +299,7 @@ declare module 'react-vis' {
   export class HorizontalBarSeriesCanvas extends AbstractSeries<HorizontalBarSeriesCanvasProps> {}
 
   export interface VerticalBarSeriesProps extends AbstractSeriesProps<VerticalBarSeriesPoint> {
-    className: any
+    className?: string
   }
   export class VerticalBarSeries extends AbstractSeries<VerticalBarSeriesProps> {}
 
