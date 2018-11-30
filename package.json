@@ -1,6 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
+  "homepage": "https://fortinvincent.github.io/RATP/",
   "private": true,
   "dependencies": {
     "react": "^16.6.3",
