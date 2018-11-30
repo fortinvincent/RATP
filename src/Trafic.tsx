@@ -6,8 +6,8 @@ import { XYPlot, VerticalBarSeries, XAxis, YAxis } from 'react-vis'
 
 interface IState {
   readonly stationTrafic: IStationDetail[]
-  readonly stationSlice: number
-  readonly stationReseau: string
+  readonly selectedSlice: number
+  readonly selectedReseau: string
 }
 
 interface IStationDetail {
@@ -22,8 +22,8 @@ export class Trafic extends React.PureComponent<{}, IState> {
     super(props)
     this.state = {
       stationTrafic: [],
-      stationSlice: 10,
-      stationReseau: 'Métro',
+      selectedSlice: 10,
+      selectedReseau: 'Métro',
     }
   }
 
@@ -40,8 +40,8 @@ export class Trafic extends React.PureComponent<{}, IState> {
 
   public render(): JSX.Element {
     const myData = this.state.stationTrafic
-    .filter(station => station.reseau === this.state.stationReseau)
-    .slice(0, this.state.stationSlice)
+    .filter(station => station.reseau === this.state.selectedReseau)
+    .slice(0, this.state.selectedSlice)
     .sort((a, b) => a.rang - b.rang)
     .map(station => (
       {label: station.station, y: station.trafic}))
@@ -49,7 +49,7 @@ export class Trafic extends React.PureComponent<{}, IState> {
     const options = {
       animationEnabled: true,
       theme: "light1",
-      title: { text: "Test" },
+      title: { text: "Nombre d'entrées de voyageurs par station en 2017 ( réseau RATP )" },
       data: [{ type: "column", dataPoints: myData }]
     }
 
@@ -58,36 +58,58 @@ export class Trafic extends React.PureComponent<{}, IState> {
     )
 
     return (
-      <div>
-        <input
-          type="number"
-          title="Nombre de stations à afficher"
-          value={this.state.stationSlice}
-          max={300}
-          min={1}
-          onChange={v => this.setState({stationSlice: Number(v.target.value)}) }
-        />
-        <button onClick={() => this.setState({stationReseau: 'RER'}) }> RER </button>
-        <button onClick={() => this.setState({stationReseau: 'Métro'}) }> Métro </button>
-        <CanvasJSChart options={options}/>
-        <div className="title">
-          Graphique de frequentation des stations de metro parisien
+      <div className="graph-container">
+        <div className="first-graph">
+          <CanvasJSChart options={options}/>
+
+          <div className="inputs">
+            <div>
+              <div className="input-title">Selectionnez le nombre de stations à afficher</div>
+              <input
+                autoFocus={true}
+                type="number"
+                title="Nombre de stations à afficher"
+                value={this.state.selectedSlice}
+                max={300}
+                min={1}
+                onChange={v => this.setState({selectedSlice: Number(v.target.value)}) }
+              />
+            </div>
+            <div className="buttons">
+              <div className="input-title">Selectionnez le réseau à afficher</div>
+              <button
+                className={this.state.selectedReseau === 'RER' ? 'selected-value' : ''}
+                onClick={() => this.setState({selectedReseau: 'RER'}) }
+              > RER </button>
+              <button
+                className={this.state.selectedReseau === 'Métro' ? 'selected-value' : ''}
+                onClick={() => this.setState({selectedReseau: 'Métro'}) }
+              > Métro </button>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <XYPlot
-            margin={{left: 75}}
-            width={1600}
-            height={600}
-          >
-            <VerticalBarSeries className="vertical-bar-series-example" data={myData2} />
-            <XAxis />
-            <YAxis marginLeft={100}/>
-          </XYPlot>
+        <div className="second-graph">
+          <div className="title">
+            Graphique de frequentation des stations de metro parisien
+          </div>
+
+          <div>
+            <XYPlot
+              margin={{left: 75}}
+              width={1600}
+              height={600}
+            >
+              <VerticalBarSeries className="vertical-bar-series-example" data={myData2} />
+              <XAxis />
+              <YAxis marginLeft={100}/>
+            </XYPlot>
+          </div>
+          <div className="legende">
+            Source RATP 2017
+          </div>
         </div>
-        <div className="legende">
-          Source RATP 2017
-        </div>
+
       </div>
     )
   }
