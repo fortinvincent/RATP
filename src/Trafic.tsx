@@ -44,7 +44,6 @@ export class Trafic extends React.PureComponent<{}, IState> {
     .sort((a, b) => a.rang - b.rang)
     .map(station => (
       {label: station.station, y: station.trafic}))
-    const uniqueValues = Array.from(new Set(myData))
 
     const options = {
       animationEnabled: true,
