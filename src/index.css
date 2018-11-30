@@ -29,3 +29,62 @@ margin-bottom: 25px;
 .legende {
   font-style: italic
 }
+
+.graph-container {
+  box-shadow: 0 0 150px 150px white;
+}
+
+.inputs {
+  background-color: white;
+  padding: 50px 250px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inputs > * {
+  margin-top: 10px;
+}
+
+button {
+  margin: 0 3px;
+  user-select: none;
+}
+
+input {
+  padding: 5px 5px 5px 12px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  transition: all .3s ease;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid black;
+}
+
+.buttons {
+  display: flex;
+}
+
+.input-title {
+  display: inline-block;
+  margin-right: 30px;
+}
+
+.selected-value {
+  transform: translateY(-1px);
+  border-radius: 4px;
+  box-shadow: 0 1px 5px 0 #333;
+  transition: all .3s ease;
+}
+
+.selected-value:focus {
+  outline: none;
+}
+
+.second-graph {
+  margin-top: 50vh;
+  background: white;
+}
+
